@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta  http-equiv="Content-Type" 
+       content="type=text/html;charset=UTF-8">
+<title>用户注册</title>
+<script type="text/javascript">
+   
+   /*获取xhr对象*/
+   function getXhr(){
+	   var xhr = null;
+	   if(window.XMLHttpRequest){
+		   xhr = new XMLHttpRequest();
+	   }else{
+		   xhr = new ActiveXOject("Microsoft.XMLHttp");
+	   }
+	   return xhr;
+   }
+   /*校验用户名是否存在*/
+    function checkName(){
+    	var uname = document.getElementById("username").value;
+    	//判断用户名是否为空
+    	if(!uname){
+    		return;
+   		}
+    	var xhr = getXhr(); 
+    	xhr.onreadystatechange=func;
+            xhr.open("post","regist.action",true);
+          	xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+            xhr.send("uname="+uname);
+       	function func(){
+          if(xhr.readyState==4 && xhr.status==200){
+          	document.getElementById("name_msg").innerHTML = xhr.responseText;
+          }
+       	}
+	}   
+</script>
+</head>
+<body>
+	<form action="" method="post">
+	用户名：
+	<input type="text" name="username" id="username" onblur="checkName()"/>
+	<span id="name_msg" style="color:red"></span>
+	<br />
+	<br />
+		<input type="submit" value="注册">
+	</form>
+
+</body>
+</html>
