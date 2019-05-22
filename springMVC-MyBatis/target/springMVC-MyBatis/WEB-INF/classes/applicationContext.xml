@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+        <!-- 自动扫描包下的所有JAVA类，并把匹配的Java类注册成bean  -->
+        <context:component-scan base-package="com.btyer.dao"/>
+        <context:component-scan base-package="com.btyer.dto"/>
+        <context:component-scan base-package="com.btyer.model"/>
+        <context:component-scan base-package="com.btyer.service.impl"/>
+        <context:component-scan base-package="com.btyer.mq"/>
+
+
+        <!-- 1、配置数据库相关参数 -->
+        <context:property-placeholder  location="classpath:jdbc.properties" ignore-unresolvable="true"/>
+
+        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+              init-method="init" destroy-method="close">
+                <property name="driverClassName" value="${jdbc.driverClassName}" />
+                <property name="url" value="${jdbc.url}" />
+                <property name="username" value="${jdbc.username}" />
+                <property name="password" value="${jdbc.password}" />
+        </bean>
+        <!-- 3、配置 SqlSessionFactory对象 -->
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
+               <!-- 注入数据库连接池 -->
+                <property name="dataSource" ref="dataSource" />
+                <!-- 扫描 sql 配置文件：mapper 需要的 xml 文件 -->
+                <property name="mapperLocations" value="classpath:mapper/*.xml" />
+
+            <!-- mybatis配置文件的位置 -->
+            <property name="configLocation" value="classpath:mybatis-config.xml" />
+
+            <!-- 配置分页插件-->
+            <property name="plugins">
+                <array>
+                    <bean class="com.github.pagehelper.PageInterceptor">
+                        <property name="properties">
+                            <value>
+                                <!--数据库的类型 MySQL-->
+                                helperDialect=mysql
+                                <!--启动合理化时，如果pageNum < 1 会查询第一页，如果pageNum > pages 会查询最后一页-->
+                                <!-- 禁用合理化时，如果 pageNum < 1 或 pageNum > pages 会返回空数据-->
+                                reasonable=true
+                            </value>
+                        </property>
+                    </bean>
+                </array>
+            </property>
+        </bean>
+
+        <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+                <constructor-arg index="0" ref="sqlSessionFactory" />
+        </bean>
+
+        <!-- 扫描 basePackage 下所有以@MyBatisDao注解的接口 -->
+        <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
+             <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+             <property name="basePackage" value="com.btyer" />
+        </bean>
+
+        <import resource="spring-redis.xml" />
+        <import resource="spring-jms.xml" />
+
+
+
+</beans>
+
+
+
+
+

@@ -1,0 +1,65 @@
+	.add{
+	   	position:absolute;
+	   	top:30%;
+	   	left:45%;
+		display: none;
+		height:300px;
+		width: 400px;
+		border: 1px solid red;
+		background-color: #eee;
+		text-align: center;
+	}
+	#earning{
+		color: green;
+		font-size: 20px;
+	}
+	#count{
+		color: green;
+		font-size: 20px;
+	}
+	#expend{
+		color: green;
+		font-size: 20px;
+	}
+	#tab{
+	border-collapse: collapse;
+	width:800px;
+	border:1px solid #abc;
+	position:relative;
+	margin: 0 auto;
+	text-align: center;
+	
+	}
+   #close{
+   	position:relative;
+   	left:95%;
+   	width:21px;
+   	cursor:pointer;
+   }
+   #close:HOVER {
+	color: #aaa;
+   }
+   #paging{
+		  	height: 50px;
+		  	width: 50%;
+		  	position: relative;
+		  	top:5%;
+		  	left: 35%;
+	}
+	a{
+	  	text-decoration: none;
+	  	color: blue;
+	}
+	a:HOVER {
+		color: red;	
+		cursor: pointer;
+	}
+	
+	.pageContainer{
+		/* font-size:larger;  */
+		
+	}
+  
+  
+
+

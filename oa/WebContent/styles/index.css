@@ -1,0 +1,39 @@
+#main{
+	width:1000px;
+	height:800px;
+	border:1px solid red;
+	margin:0 auto;
+}
+#menu{
+	width:180px;
+	height:800px;
+	border:1px solid #eee;
+	float:left;
+}
+#menu dl{
+	margin-top:100px;
+	margin-left:20px;
+}
+
+#menu dl dt{
+	margin-top:20px;
+}
+#menu dl dd{
+	margin-top:10px;
+}
+#menu dl dd a{
+	text-decoration: none;
+	color:blue;
+}
+#menu dl dd a:hover{
+	text-decoration: none;
+	color:#fc0;
+}
+
+
+#content{
+	width:800px;
+	height:800px;
+	border:1px solid #aaa;
+	float:left;
+}

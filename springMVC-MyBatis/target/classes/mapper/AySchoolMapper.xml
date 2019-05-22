@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.btyer.dao.AySchoolDao">
+    <resultMap id="schoolMap" type="com.btyer.model.AySchool">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <collection property="students" javaType="ArrayList" column="id"  ofType="com.btyer.model.AySchool"
+            fetchType="lazy" select="com.btyer.dao.AyStudentDao.findBySchoolId" >
+
+            <id property="id" column="id" />
+            <result property="name" column="name" />
+            <result property="age" column="age" />
+        </collection>
+    </resultMap>
+
+    <!-- 根据id查询学校 -->
+    <select id="findById" parameterType="Integer" resultMap="schoolMap" >
+         select  *  from ay_school where id = #{id};
+        </select>
+
+
+
+    <cache />
+
+
+</mapper>

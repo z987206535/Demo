@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.btyer.dao.AyRoleDao">
+    <resultMap id="roleMap" type="com.btyer.model.AyRole">
+
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+      <!--  <collection property="ayUserList" javaType="ArrayList" column="id" ofType="com.btyer.model.AyUser"
+                    fetchType="lazy" select="com.btyer.dao.AyUserDao.findByRoleId">
+            <id property="id" column="id" />
+            <result property="name" column="name" />
+            <result property="password" column="password" />
+            <result property="age" column="age" />
+        </collection>-->
+        <collection property="ayUserList" javaType="ArrayList" column="id" ofType="com.btyer.model.AyUser"
+                     select="com.btyer.dao.AyUserDao.findByRoleId">
+            <id property="id" column="id" />
+            <result property="name" column="name" />
+            <result property="password" column="password" />
+            <result property="age" column="age" />
+        </collection>
+
+    </resultMap>
+
+
+    <select id="findById" parameterType="String" resultMap="roleMap">
+        SELECT * FROM ay_role WHERE id = #{id}
+    </select>
+
+    <select id="findByUserId" parameterType="Integer" resultType="com.btyer.model.AyRole">
+
+        SELECT * FROM ay_role WHERE id IN (
+            SELECT role_id FROM ay_user_role_rel WHERE user_id = #{userId}
+        )
+    </select>
+
+
+
+</mapper>
